@@ -1,0 +1,70 @@
+#include "stdafx.h"
+#include <string.h>
+#include <iostream>
+#include <stdlib.h>
+using namespace std;
+#define MAXBUF 100
+int main()
+{
+	FILE *f1;
+	FILE *f2;
+	char buf1[MAXBUF], buf2[MAXBUF], *s1, *s2;
+	bool d;
+	int i, n, k1 = 0, k2 = 0;
+	f1 = fopen("1.txt", "r");
+	do {
+
+		fgets(buf1, MAXBUF, f1);
+		k1++;
+		s1 = new char[strlen(buf1) + 1];
+		for (i = 0; i < strlen(buf1); i++) s1[i] = buf1[i];
+		s1[strlen(buf1)] = 0;
+		buf1[0] = NULL;
+		d = false;
+		f2 = fopen("2.txt", "r");
+		do {
+
+			fgets(buf2, MAXBUF, f2);
+			s2 = new char[strlen(buf2) + 1];
+			for (i = 0; i < strlen(buf2); i++) s2[i] = buf2[i];
+			s2[strlen(buf2)] = 0;
+			if (strcmp(s1, s2) == 0) d = true;
+			buf2[0] = NULL;
+
+		} while (!feof(f2));
+		fclose(f2);
+		if (d == false) cout << "1.txt " << "stroka " << k1 << " " << s1;
+		delete[]s1;
+		
+	} while (!feof(f1));
+	fclose(f1);
+	f1 = fopen("1.txt", "r");
+	f2 = fopen("2.txt", "r");
+	do {
+
+		fgets(buf1, MAXBUF, f2);
+		s1 = new char[strlen(buf1) + 1];
+		k2++;
+		for (i = 0; i < strlen(buf1); i++) s1[i] = buf1[i];
+		s1[strlen(buf1)] = 0;
+		buf1[0] = NULL;
+		d = false;
+		f1 = fopen("1.txt", "r");
+		do {
+
+			fgets(buf2, MAXBUF, f1);
+			s2 = new char[strlen(buf2) + 1];
+			for (i = 0; i < strlen(buf2); i++) s2[i] = buf2[i];
+			s2[strlen(buf2)] = 0;
+			if (strcmp(s1, s2) == 0) d = true;
+			buf2[0] = NULL;
+
+		} while (!feof(f1));
+		fclose(f1);
+		if (d == false) cout << "2.txt " << "stroka " << k2 << " " << s1;
+		delete[]s1;
+
+	} while (!feof(f2));
+	system("pause");
+	return 0;
+}
